@@ -1,0 +1,21 @@
+# 忽略 Terraform 的 .terraform 目录
+.terraform/
+
+# 忽略 Terraform state 文件
+*.tfstate
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfstate.*.tfvars
+*.tfstate.tfvars
+terraform.tfstate
+terraform.tfstate.*
+*.tfplan
+
+# 忽略 .tfvars 文件（给环境变量文件留一个空白行以便在需要时加载环境变量）
+*.tfvars
+
+# 从版本控制中排除敏感文件（如密钥文件）
+*.pem
+*.pem.pub
+*.key
+*.key.pub
