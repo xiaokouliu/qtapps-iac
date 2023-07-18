@@ -2,6 +2,8 @@
 
 使用基础设施即代码(Infrastructure as Code, IaC)的事实标准Terraform描述量潮应用系统基础设施的资源编排，代码化地集中管理基础设施。
 
+项目目录遵循[Terraform官方规范](https://developer.hashicorp.com/terraform/language/modules/develop/structure)。
+
 ## 配置源
 
 Windows系统配置`terraform.rc`到用户的`%APPDATA%`目录中；
@@ -39,3 +41,9 @@ terraform plan
 ```shell
 terraform apply
 ```
+
+## 删除
+
+```shell
+ terraform destroy
+ ```
