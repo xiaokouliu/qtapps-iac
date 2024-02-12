@@ -19,3 +19,7 @@ terraform.tfstate.*
 *.pem.pub
 *.key
 *.key.pub
+
+# IDE
+.vscode/
+.idea/
