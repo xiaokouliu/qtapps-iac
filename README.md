@@ -60,8 +60,12 @@ terraform init
 
 项目目录遵循[Terraform官方规范](https://developer.hashicorp.com/terraform/language/modules/develop/structure)。
 
-- `main.tf`模块是目前的资源配置声明位置。
-- `modules/`由于搞不清楚使用方法，实际上暂未使用。
+- `main.tf`: 资源配置声明文件
+- `provider.tf`: 设置供应商
+- `variables.tf`: 设置输入变量
+- `outputs.tf`: 输出结果
+- `modules/`
+  - `pgsql`: 云原生PostgreSQL服务
 - `examples/`是一些示例配置，已废弃。
 
 ### 命名规范
@@ -88,6 +92,12 @@ terraform apply
 ```
 
 PS：Kubernetes集群部署需要4-5分钟，删除需要1分钟。
+
+查看输出：
+
+```shell
+terraform output
+```
 
 为了节约资源，通过以后可以把开发环境的资源删除：
 
