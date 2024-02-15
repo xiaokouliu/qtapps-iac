@@ -68,23 +68,31 @@ terraform init
 
 系统层级的云资源命名采用qtapps-<app>-<env>的格式，如qtapps-pgsql-dev。
 
-### 本地部署
+### 本地开发
 
 增加新模块：
 ```shell
 terraform get
 ```
 
-预览：
+调试语法，确认无误：
 
 ```shell
 terraform plan
 ```
 
-应用：
+尝试部署到云端：
 
 ```shell
 terraform apply
+```
+
+PS：Kubernetes集群部署需要4-5分钟，删除需要1分钟。
+
+为了节约资源，通过以后可以把开发环境的资源删除：
+
+```shell
+terraform destory
 ```
 
 ### 云端CI/CD

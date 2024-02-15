@@ -1,9 +1,6 @@
-provider "helm" {
-  kubernetes {
-    config_path    = "~/.kube/config"
-    config_context = "minikube"
-  }
-}
+/*
+Cloud-Native Vault with Kubernetes and Consul
+*/
 
 resource "helm_release" "vault" {
   repository = "https://helm.releases.hashicorp.com"

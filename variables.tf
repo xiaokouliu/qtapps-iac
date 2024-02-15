@@ -1,3 +1,6 @@
+/*
+环境标识
+*/
 variable "env" {
   description = "环境标识"
   type = string
@@ -5,6 +8,9 @@ variable "env" {
   default = "dev"
 }
 
+/*
+腾讯云基本配置
+*/
 variable "tencentcloud_secret_id" {
   description = "腾讯云密钥ID"
   type        = string
@@ -35,12 +41,22 @@ variable "tencentcloud_zone" {
   default = "ap-shanghai-2"
 }
 
-variable "tencentcloud_vpc_cidr" {
-  description = "腾讯云私有网络CIDR"
+/*
+云资源配置
+*/
+# VPC
+variable "vpc_cidr" {
+  description = "私有网络CIDR"
   type = string
 }
 
-variable "tencentcloud_vpc_subnet_cidr" {
-  description = "腾讯云私有网络子网CIDR"
+variable "vpc_subnet_cidr" {
+  description = "私有网络子网CIDR"
+  type = string
+}
+
+# PostgreSQL服务
+variable "kubernetes_cluster_cidr" {
+  description = "PostgreSQL集群CIDR"
   type = string
 }

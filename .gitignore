@@ -10,6 +10,7 @@
 terraform.tfstate
 terraform.tfstate.*
 *.tfplan
+.terraform.tfstate.lock.info
 
 # 忽略 .tfvars 文件（给环境变量文件留一个空白行以便在需要时加载环境变量）
 *.tfvars
