@@ -12,26 +12,48 @@ resource "kubernetes_namespace" "postgresql" {
   }
 }
 
-# This is the persistent volume claim that the PostgreSQL deployment will use
-resource "kubernetes_persistent_volume_claim" "postgresql" {
+# A persistent volume claims is created for the PostgreSQL database
+resource "kubernetes_persistent_volume" "postgresql" {
   metadata {
-    name = "postgresql-data"
-    namespace = kubernetes_namespace.postgresql.metadata[0].name
+    name = "postgresql-pv"
   }
   spec {
+    capacity = {
+      storage = "10Gi"
+    }
+    storage_class_name = "manual"
     access_modes = ["ReadWriteOnce"]
-    resources {
-      requests = {
-        storage = "10Gi"
+    persistent_volume_source {
+      host_path {
+        path = "/data/postgresql"
       }
     }
   }
 }
 
+# This is the persistent volume claim that the PostgreSQL deployment will use
+resource "kubernetes_persistent_volume_claim" "postgresql" {
+  metadata {
+    name = "postgresql-pv-claim"
+    namespace = kubernetes_namespace.postgresql.metadata[0].name
+  }
+  spec {
+    storage_class_name = "manual"
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "5Gi"
+      }
+    }
+    volume_name = kubernetes_persistent_volume.postgresql.metadata[0].name
+  }
+}
+
 # Kubernetes Deployment of PostgreSQL
-resource "kubernetes_deployment" "postgresql_deployment" {
+resource "kubernetes_deployment" "postgresql" {
   metadata {
     name = "postgresql-deployment"
+    namespace = kubernetes_namespace.postgresql.metadata[0].name
   }
 
   spec {
@@ -88,13 +110,17 @@ resource "kubernetes_deployment" "postgresql_deployment" {
 # Kubernetes Service of PostgreSQL
 resource "kubernetes_service" "postgresql" {
   metadata {
-    name = "postgresql"
+    name = "postgresql-service"
     namespace = kubernetes_namespace.postgresql.metadata[0].name
     labels = {
       app = "postgresql"
     }
   }
   spec {
+    type = "LoadBalancer"
+    selector = {
+      app = "postgresql"
+    }
     port {
       name = "postgresql"
       protocol = "TCP"

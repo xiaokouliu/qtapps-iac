@@ -24,3 +24,6 @@ terraform.tfstate.*
 # IDE
 .vscode/
 .idea/
+
+# k8s config
+kube_config
