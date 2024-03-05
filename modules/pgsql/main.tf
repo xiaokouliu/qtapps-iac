@@ -24,8 +24,10 @@ resource "kubernetes_persistent_volume" "postgresql" {
     storage_class_name = "manual"
     access_modes = ["ReadWriteOnce"]
     persistent_volume_source {
-      host_path {
-        path = "/data/postgresql"
+      csi {
+        driver = "com.tencent.cloud.csi.cbs"
+        volume_handle = var.disk_id
+        fs_type = "ext4"
       }
     }
   }
@@ -84,6 +86,11 @@ resource "kubernetes_deployment" "postgresql" {
             value = "pgsql@123"
           }
 
+          env {
+            name  = "PGDATA"
+            value = "/var/lib/postgresql/data/pgdata"
+          }
+
           port {
             container_port = 5432
             name           = "postgresql"
@@ -96,7 +103,7 @@ resource "kubernetes_deployment" "postgresql" {
         }
 
         volume {
-          name =  "postgresql-persistent-storage"
+          name = "postgresql-persistent-storage"
 
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.postgresql.metadata[0].name
